@@ -4,15 +4,34 @@
 </div>
 
 
-  <div ng-controller="hideOrDisplayController">
-      <label>Afficher le paragraphe</label>
-      <input type="checkbox" ng-model="showContent"/>
-      <p ng-show="showContent">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+<div ng-controller="hideOrDisplayController">
+    <label>Afficher le paragraphe</label>
+    <input type="checkbox" ng-model="showContent"/>
+    <p ng-show="showContent">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+</div>
+
+
+
+<div ng-controller="helloWorldController">
+    HELLO {{name}}!
+</div>
+
+<div ng-controller="calculateController">
+  <ul>
+    <li ng-repeat="article in articles">
+      <label>{{ article.name }}</label>
+      <input ng-model="article.price">
+      <input type="number" ng-model="article.quantity">
+    </li>
+  </ul>
+  <div>
+      <label>Total invoice: </label><span>{{total() | currency:"€":2}}</span>
+  </div>
+  <div>
+      <label>Discount: </label><span>{{discount | currency:"€":2}}</span>
+  </div>
+  <div>
+      <label>To pay: </label><span>{{finalTotal() | currency:"€":2}}</span>
   </div>
 
-
-
-  <div ng-controller="helloWorldController">
-     HELLO {{name}}!
-  </div>
-
+</div>
