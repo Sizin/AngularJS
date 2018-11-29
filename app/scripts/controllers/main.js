@@ -14,4 +14,23 @@ angular.module('angularjsApp')
       'AngularJS',
       'Karma'
     ];
+
   });
+
+angular.module('angularjsApp').controller('adultController', function($scope){
+  $scope.age = 0;
+  $scope.majorOrMinorText = function(){
+    return ($scope.age >= 18) ? "major" : "minor";
+  };
+});
+
+angular.module('angularjsApp').controller('hideOrDisplayController', function($scope){
+  $scope.showContent = true;
+});
+
+angular.module('angularjsApp').controller('helloWorldController', function($scope){
+  $scope.name = "Sinan"
+
+});
+
+
