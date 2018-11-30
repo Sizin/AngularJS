@@ -1,5 +1,8 @@
 'use strict';
 
+var myModule = angular.module('angularjsApp');
+
+
 /**
  * @ngdoc function
  * @name angularjsApp.controller:MainCtrl
@@ -7,8 +10,7 @@
  * # MainCtrl
  * Controller of the angularjsApp
  */
-angular.module('angularjsApp')
-  .controller('MainCtrl', function () {
+  myModule.controller('MainCtrl', function () {
     this.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
@@ -17,24 +19,24 @@ angular.module('angularjsApp')
 
   });
 
-angular.module('angularjsApp').controller('adultController', function($scope){
+myModule.controller('adultController', function($scope){
   $scope.age = 0;
   $scope.majorOrMinorText = function(){
     return ($scope.age >= 18) ? "major" : "minor";
   };
 });
 
-angular.module('angularjsApp').controller('hideOrDisplayController', function($scope){
+myModule.controller('hideOrDisplayController', function($scope){
   $scope.showContent = true;
 });
 
-angular.module('angularjsApp').controller('helloWorldController', function($scope){
+myModule.controller('helloWorldController', function($scope){
   $scope.name = "Sinan";
 
 });
 
 
-angular.module('angularjsApp').controller("calculateController", function($scope){
+myModule.controller("calculateController", function($scope){
   $scope.articles = [{
     "name":"iPhone",
     "quantity":1,
@@ -67,3 +69,49 @@ angular.module('angularjsApp').controller("calculateController", function($scope
 });
 
 
+myModule.controller("myTestController", function($scope){
+  $scope.title = "Title";
+  $scope.text = "Content";
+});
+
+// restrict : 'EA' allows use to use <expander> tag in HTML file
+/*replace, transclude and template works together and tells Angular that we want to replace expander directive with our template
+  and that the content of the current expander tag (i.e. {{text}}) would be found where we specified 'ng-transclude' in HTML */
+myModule.directive("expander", function(){
+  return {
+    restrict: 'EA',
+    replace: true,
+    transclude : true,
+    scope: {title: '=expanderTitle'},
+    template: '<div>' +
+    '<div class="title" ng-click="toggle()">{{ title }}</div>' +
+    '<div class="body" ng-show="showMe" ng-transclude></div>' +
+    '</div>',
+    link: function(scope, element, attrs){
+      scope.showMe = false;
+      scope.toggle = function toggle(){
+        scope.showMe = !scope.showMe;
+      };
+    }
+  }
+});
+
+
+myModule.directive("expanderTwo", function(){
+  return {
+    restrict: 'EA',
+    replace: true,
+    transclude : true,
+    scope: {title: 'expanderTitle'},
+    template: '<div>' +
+    '<div class="title" ng-click="togglet()">{{ title }}</div>' +
+    '<div class="body" ng-show="showMe" ng-transclude></div>' +
+    '</div>',
+    link: function(scope, element, attrs){
+      scope.showMe = false;
+      scope.toggle = function togglet(){
+        scope.showMe = !scope.showMe;
+      };
+    }
+  }
+});

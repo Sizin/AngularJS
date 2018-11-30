@@ -3,6 +3,7 @@
       <span>You are <b ng-bind="majorOrMinorText()"></b></span>
 </div>
 
+<hr>
 
 <div ng-controller="hideOrDisplayController">
     <label>Afficher le paragraphe</label>
@@ -10,11 +11,13 @@
     <p ng-show="showContent">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
 </div>
 
-
+<hr>
 
 <div ng-controller="helloWorldController">
     HELLO {{name}}!
 </div>
+
+<hr>
 
 <div ng-controller="calculateController">
   <ul>
@@ -35,3 +38,28 @@
   </div>
 
 </div>
+
+<hr>
+
+<div>
+  <div ng-controller="myTestController">
+    <!-- As the expander directive states 'EA' (Element and attribute) in the 'restrict' field
+      We can use "expander" as a tag -->
+    <expander class="expander" expander-title="title">
+      {{ text }}
+    </expander>
+  </div>
+</div>
+
+<hr>
+
+<div>
+    <div ng-controller="myTestController">
+      <!-- As the expander directive states 'EA' (Element and attribute) in the 'restrict' field
+        We can use "expander" as a tag -->
+      <expander class="expander" expander-title="title">
+        {{ text }}
+      </expander>
+    </div>
+  </div>
+
