@@ -62,3 +62,12 @@
         </expander>
     </accordion>
 </div>
+
+
+<hr>
+<h1>My reverse filter</h1>
+<div ng-controller="myFilter">
+  <span>{{greeting}}</span>
+  <span>{{greeting | reverse}}</span>
+  <span>{{greeting | reverse:true}}</span>
+</div>
