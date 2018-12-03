@@ -43,23 +43,22 @@
 
 <div>
   <div ng-controller="myTestController">
-    <!-- As the expander directive states 'EA' (Element and attribute) in the 'restrict' field
+    <accordion>
+      <!-- As the expander directive states 'EA' (Element and attribute) in the 'restrict' field
       We can use "expander" as a tag -->
-    <expander class="expander" expander-title="title">
-      {{ text }}
-    </expander>
+      <expander class="expander" expander-title="title">
+          {{ text }}
+        </expander>
+    </accordion>
   </div>
 </div>
 
 <hr>
 
-<div>
-    <div ng-controller="myTestController">
-      <!-- As the expander directive states 'EA' (Element and attribute) in the 'restrict' field
-        We can use "expander" as a tag -->
-      <expander class="expander" expander-title="title">
-        {{ text }}
-      </expander>
-    </div>
-  </div>
-
+<div ng-controller="SecondController">
+    <accordion>
+        <expander class="expander" expander-title="expander.title" ng-repeat="expander in expanders">
+            {{expander.text}}
+        </expander>
+    </accordion>
+</div>

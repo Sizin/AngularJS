@@ -74,44 +74,64 @@ myModule.controller("myTestController", function($scope){
   $scope.text = "Content";
 });
 
+myModule.controller("SecondController", function($scope){
+  $scope.expanders = [
+      {title: 'Title 1',
+       text: 'Content 1'},
+      {title: 'Title 2',
+       text: 'Content 2'},
+      {title: 'Title 3',
+       text: 'Content 3'}
+  ];
+});
+
+myModule.directive("accordion", function(){
+  return{
+      restrict: 'EA',
+      replace: true,
+      transclude: true,
+      template: "<div ng-transclude></div>",
+      controller: function(){
+          var expanders = [];
+          this.gotOpened = function(selectedExpander){
+              expanders.forEach(function(expander){
+                  // When an expander is selected the others are closed
+                  if(selectedExpander != expander){
+                      expander.showMe = false;
+                  }
+              });
+          };
+          this.addExpander = function(expander){
+              expanders.push(expander);
+          };
+      }
+  };
+});
+
 // restrict : 'EA' allows use to use <expander> tag in HTML file
 /*replace, transclude and template works together and tells Angular that we want to replace expander directive with our template
   and that the content of the current expander tag (i.e. {{text}}) would be found where we specified 'ng-transclude' in HTML */
 myModule.directive("expander", function(){
   return {
-    restrict: 'EA',
-    replace: true,
-    transclude : true,
-    scope: {title: '=expanderTitle'},
-    template: '<div>' +
-    '<div class="title" ng-click="toggle()">{{ title }}</div>' +
-    '<div class="body" ng-show="showMe" ng-transclude></div>' +
-    '</div>',
-    link: function(scope, element, attrs){
-      scope.showMe = false;
-      scope.toggle = function toggle(){
-        scope.showMe = !scope.showMe;
-      };
-    }
-  }
+      restrict: 'EA',
+      replace: true,
+      transclude: true,
+      require: '^?accordion', //require here specifies that the expander directive needs the accordion directive
+      scope: {title: '=expanderTitle'},
+      template: '<div>' +
+      '<div class="title" ng-click="toggle()">{{title}}</div>' +
+      '<div class="body" ng-show="showMe" ng-transclude></div>' +
+      '</div>',
+      link: function(scope, element, attrs, accordionController){
+          scope.showMe = false;
+          accordionController.addExpander(scope);
+          scope.toggle = function toggle(){
+              scope.showMe = !scope.showMe;
+              accordionController.gotOpened(scope);
+          };
+      }
+  };
 });
 
 
-myModule.directive("expanderTwo", function(){
-  return {
-    restrict: 'EA',
-    replace: true,
-    transclude : true,
-    scope: {title: 'expanderTitle'},
-    template: '<div>' +
-    '<div class="title" ng-click="togglet()">{{ title }}</div>' +
-    '<div class="body" ng-show="showMe" ng-transclude></div>' +
-    '</div>',
-    link: function(scope, element, attrs){
-      scope.showMe = false;
-      scope.toggle = function togglet(){
-        scope.showMe = !scope.showMe;
-      };
-    }
-  }
-});
+
